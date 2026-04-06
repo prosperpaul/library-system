@@ -8,7 +8,12 @@ connectDB();
 
 const app = express();
 app.use(cors({ origin: "https://library-management-system-5.vercel.app/" }));
-app.use(express.json());
+
+app.use(cors({
+  origin: frontendURL,
+  credentials: true, // allows cookies/auth headers
+}));
+
 
 // Routes
 app.use("/auth", require("./routes/authRoutes"));
