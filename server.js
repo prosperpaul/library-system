@@ -75,6 +75,14 @@ app.get("/", (req, res) => {
   res.send("Library System API is running...");
 });
 
+
+// Keep Render awake
+
+const https = require("https");
+setInterval(() => {
+  https.get("https://library-system-jwtz.onrender.com");
+}, 840000);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
