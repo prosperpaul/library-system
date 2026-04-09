@@ -5,8 +5,9 @@ const {
   getAttendants,
 } = require("../controllers/attendantController");
 const { validateAttendant } = require("../middleware/validate");
+const { protect, adminOnly } = require("../middleware/auth");
 
-router.post("/", ...validateAttendant, createAttendant);
-router.get("/", getAttendants);
+router.post("/", protect, adminOnly, ...validateAttendant, createAttendant);
+router.get("/", protect, getAttendants);
 
 module.exports = router;

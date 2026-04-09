@@ -11,14 +11,15 @@ const {
   getOverdueBooks,
 } = require("../controllers/bookController");
 const { validateBook, validateBorrow } = require("../middleware/validate");
+const { protect, adminOnly } = require("../middleware/auth");
 
-router.post("/", ...validateBook, createBook);
+router.post("/", protect, ...validateBook, createBook);
 router.get("/", getBooks);
-router.get("/overdue", getOverdueBooks);
+router.get("/overdue", protect, getOverdueBooks);
 router.get("/:id", getBook);
-router.put("/:id", updateBook);
-router.delete("/:id", deleteBook);
-router.post("/:id/borrow", ...validateBorrow, borrowBook);
-router.post("/:id/return", returnBook);
+router.put("/:id", protect, updateBook);
+router.delete("/:id", protect, adminOnly, deleteBook);
+router.post("/:id/borrow", protect, ...validateBorrow, borrowBook);
+router.post("/:id/return", protect, returnBook);
 
 module.exports = router;

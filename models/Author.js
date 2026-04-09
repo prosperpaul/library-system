@@ -1,16 +1,3 @@
-// const mongoose = require("mongoose");
-
-// const authorSchema = new mongoose.Schema({
-//   name: {
-//     type: String,
-//     required: true,
-//   },
-//   bio: {
-//     type: String,
-//   },
-// }, { timestamps: true });
-
-// module.exports = mongoose.model("Author", authorSchema);
 
 const mongoose = require("mongoose");
 

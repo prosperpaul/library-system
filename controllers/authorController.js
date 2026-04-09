@@ -1,4 +1,5 @@
 const Author = require("../models/Author");
+const Book = require("../models/Book");
 
 // Create author
 const createAuthor = async (req, res) => {
@@ -45,8 +46,15 @@ const updateAuthor = async (req, res) => {
 // Delete author
 const deleteAuthor = async (req, res) => {
   try {
-    const author = await Author.findByIdAndDelete(req.params.id);
+    const author = await Author.findById(req.params.id);
     if (!author) return res.status(404).json({ message: "Author not found" });
+
+    const bookCount = await Book.countDocuments({ authors: req.params.id });
+    if (bookCount > 0) {
+      return res.status(400).json({ message: `Cannot delete author. They are linked to ${bookCount} book(s).` });
+    }
+
+    await author.deleteOne();
     res.status(200).json({ message: "Author deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });

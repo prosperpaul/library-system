@@ -6,9 +6,10 @@ const {
   getStudent,
 } = require("../controllers/studentController");
 const { validateStudent } = require("../middleware/validate");
+const { protect } = require("../middleware/auth");
 
-router.post("/", ...validateStudent, createStudent);
-router.get("/", getStudents);
-router.get("/:id", getStudent);
+router.post("/", protect, ...validateStudent, createStudent);
+router.get("/", protect, getStudents);
+router.get("/:id", protect, getStudent);
 
 module.exports = router;

@@ -1,4 +1,6 @@
 const Book = require("../models/Book");
+const Student = require("../models/Student");
+const LibraryAttendant = require("../models/LibraryAttendant");
 
 // Create book
 const createBook = async (req, res) => {
@@ -9,16 +11,6 @@ const createBook = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-
-// Get all books
-// const getBooks = async (req, res) => {
-//   try {
-//     const books = await Book.find().populate("authors");
-//     res.status(200).json(books);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
 
 // Get all books with pagination and search
 const getBooks = async (req, res) => {
@@ -99,6 +91,12 @@ const borrowBook = async (req, res) => {
     }
 
     const { studentId, attendantId, returnDate } = req.body;
+
+    const student = await Student.findById(studentId);
+    if (!student) return res.status(404).json({ message: "Student not found" });
+
+    const attendant = await LibraryAttendant.findById(attendantId);
+    if (!attendant) return res.status(404).json({ message: "Attendant not found" });
 
     book.status = "OUT";
     book.borrowedBy = studentId;
