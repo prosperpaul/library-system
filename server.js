@@ -11,7 +11,7 @@ const app = express();
 
 // Allowed origins (frontend URLs)
 const allowedOrigins = [
-  "http://localhost:3000",                  // local frontend
+  "http://localhost:3001",                  // local frontend
   "https://library-management-system-5.vercel.app" // hosted frontend
 ];
 
